@@ -19,6 +19,42 @@
       </div>
     </div>
     <% if (!username) { %>
+      <button type="button" class="btn btn-light"> <a href = "/register">Register</a> </button>
+      <button type="button" class="btn btn-warning"><a href = "/login">Login</a></button>
+      </div>
+    </form>
+    <% } else { %>
+      <div type = "text">Logged in as <%= username["email"] %></div>
+        <form class = "form-inline" action = "/logout" method = "POST">
+        <button type="submit" class="btn btn-danger">Logout!</button>
+        </form>
+    <% } %>
+    
+  </nav>
+</header>
+
+
+
+<!--
+  <% if (username) { %>
+      <div type = "text">Logged in as <%= username["email"] %></div>
+      <form class = "form-inline" action = "/logout" method = "POST">
+        <button type="submit" class="btn btn-warning">Logout</button>
+      </form>
+      </div>
+  <% } else { %>
+    <button type="button" class="btn btn-light"> <a href = "/register">Register</a> </button>
+    <button type="button" class="btn btn-warning"><a href = "/login">Login</a></button>
+  <% } %>
+
+
+    <button type="button" class="btn btn-light"> <a href = "/user_registration">Register</a> </button>
+      <button type="button" class="btn btn-warning"><a href = "/login">Login</a></button>
+
+  -->
+
+<!--
+  <% if (!username) { %>
     <form class="form-inline" action="/login" method="POST">
       <div class="form-group mb-2">
         <label for=login>Username</label>
@@ -38,6 +74,5 @@
         <button type="submit" class="btn btn-danger">Logout!</button>
         </form>
     <% } %>
-    
-  </nav>
-</header>
+
+      -->
