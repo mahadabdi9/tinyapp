@@ -15,7 +15,6 @@ app.use(cookieSession({
 
 
 
-
 const urlDatabase = {
   b6UTxQ: {
     longURL: "https://www.tsn.ca",
@@ -26,6 +25,7 @@ const urlDatabase = {
     userID: "aJ48lW",
   },
 };
+
 
 const users = {
   userRandomID: {
@@ -40,6 +40,7 @@ const users = {
   },
 };
 
+
 app.get("/", (req, res) => {
   if (req.session.user_id) {
     res.redirect("/urls")
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
     res.redirect("/login")
   }
 });
+
 
 app.get("/urls", (req, res) => {
   if (!req.session.user_id) {
@@ -59,6 +61,7 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+
 app.get("/urls/new", (req, res) => {
   if (!req.session.user_id) {
     return res.redirect('/login');
@@ -67,6 +70,7 @@ app.get("/urls/new", (req, res) => {
   const templateVars = { user: user };
   res.render("urls_new", templateVars);
 });
+
 
 app.get("/urls/:id", (req, res) => {
   if (!req.session.user_id) {
@@ -85,6 +89,7 @@ app.get("/urls/:id", (req, res) => {
   const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id].longURL, user: user};
   res.render("urls_show", templateVars);
 });
+
 
 // Deleting URL from URLS page and staying on current page after
 app.post("/urls/:id/delete", (req, res) => {
@@ -123,6 +128,7 @@ app.post("/urls/:id/delete", (req, res) => {
     res.redirect("/urls")
   });
 
+
 // Adding a new URL
 app.post("/urls", (req, res) => {
   if (!req.session.user_id) {
@@ -147,8 +153,7 @@ app.get("/u/:id", (req, res) => {
 });
 
 
-
-
+// Post route for login
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -171,6 +176,7 @@ app.post('/login', (req, res) => {
   res.redirect('/urls');
 });
 
+
 app.get('/login', (req, res) => { 
   if (req.session.user_id) {
     return res.redirect('/urls');
@@ -179,11 +185,13 @@ app.get('/login', (req, res) => {
   res.render("login", templateVars);
 });
 
+
 // Logout
 app.post('/logout', (req, res) => {
   req.session = null
   res.redirect('/login');
 });
+
 
 // get for request page
 app.get("/register", (req, res) => {
@@ -193,6 +201,7 @@ app.get("/register", (req, res) => {
   const templateVars = { user: null };
   res.render("register", templateVars);
 });
+
 
 // registration handler
 app.post('/register', (req, res) => {
@@ -207,6 +216,7 @@ app.post('/register', (req, res) => {
     return res.status(403).send("Email already exists. Please login.");
   }
  
+
   const userId = generateRandomString();
   users[userId] = {
     id: userId,
@@ -214,11 +224,10 @@ app.post('/register', (req, res) => {
     password: bcrypt.hashSync(password, 10)
   };
 
+
   req.session.user_id = userId
   res.redirect('/urls');
 });
-
-
 
 
 app.listen(PORT, () => {
